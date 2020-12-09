@@ -5,90 +5,32 @@ var os = require('os');
 
 var lib = {};
 
-var _getSerialNumber;
+var _getDiskInfo;
 switch (os.platform()) {
 
     case 'win32':
-        _getSerialNumber = require('./lib/windows.js');
+        _getDiskInfo = require('./lib/windows.js');
         break;
 
-    case 'linux':
-        _getSerialNumber = require('./lib/linux.js');
-        break;
+    // case 'linux':
+    //     _getDiskInfo = require('./lib/linux.js');
+    //     break;
 
-    case 'darwin':
-    case 'sunos':
-        _getSerialNumber = require('./lib/macosx.js');
-        break;
+    // case 'darwin':
+    // case 'sunos':
+    //     _getDiskInfo = require('./lib/macosx.js');
+    //     break;
 
     default:
-        console.warn("node-HddSerialNumber: Unkown os.platform(), defaulting to `linux'.");
-        _getSerialNumber = require('./lib/linux.js');
+        console.warn("node-HddSerialNumber: Unkown os.platform()");
+        // _getDiskInfo = require('./lib/linux.js');
         break;
 
 }
 
-lib.first = function (callback) {
+lib.diskinfo = async function (path) {
 
-    if (typeof callback === 'function') {
-        _getSerialNumber(0, callback);
-    }
-
-    return null;
-};
-lib.all = function (callback) {
-
-    if (typeof callback === 'function') {
-        _getSerialNumber(callback);
-    }
-
-    return null;
-};
-lib.one = function (index, callback) {
-
-    if (typeof index === 'function') {
-        _getSerialNumber(index);
-    } else {
-        _getSerialNumber(index, callback);
-    }
-
-};
-
-lib.check = function(SerialNumber,callback){
-    if (typeof callback === 'function' && typeof SerialNumber === "string") {
-        _getSerialNumber(function (error, Serials) {
-            if (error) {
-                callback(error, null);
-            } else {
-                if (Serials.indexOf(SerialNumber) !== -1) {
-                    callback(null, true);
-                } else {
-                    callback(null, false);
-                }
-            }
-        });
-
-    }else{
-        return null;
-    }
-};
-lib.isfirst = function (SerialNumber, callback) {
-    if (typeof callback === 'function' && typeof SerialNumber === "string") {
-        _getSerialNumber(0, function (error, Serial) {
-            if (error) {
-                callback(error, null);
-            } else {
-                if (Serial === SerialNumber) {
-                    callback(null, true);
-                } else {
-                    callback(null, false);
-                }
-            }
-        });
-
-    }else{
-        return null;
-    }
+    return await _getDiskInfo(path)
 };
 
 module.exports = lib;

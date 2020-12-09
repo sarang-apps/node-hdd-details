@@ -28,5 +28,10 @@
   "bugs": {
     "url": "https://github.com/ihabhamad/node-hddserial/issues"
   },
-  "homepage": "https://github.com/ihabhamad/node-hddserial"
+  "homepage": "https://github.com/ihabhamad/node-hddserial",
+  "dependencies": {
+    "local-devices": "^3.1.0",
+    "node-powershell": "^4.0.0",
+    "systeminformation": "^4.28.1"
+  }
 }
