@@ -16,10 +16,10 @@ switch (os.platform()) {
     //     _getDiskInfo = require('./lib/linux.js');
     //     break;
 
-    // case 'darwin':
+    case 'darwin':
     // case 'sunos':
-    //     _getDiskInfo = require('./lib/macosx.js');
-    //     break;
+        _getDiskInfo = require('./lib/macosx.js');
+        break;
 
     default:
         console.warn("node-HddSerialNumber: Unkown os.platform()");
